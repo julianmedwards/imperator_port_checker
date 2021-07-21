@@ -1,15 +1,17 @@
 # game/setup/provinces
 
-from return_ports import return_ports
+from select_save import select_save
 from find_nation import find_nation
+from return_ports import return_ports
+
 from classes.save import Save
 
 # New way of calling functions and passing along has broken program
 # response to entering an unrecognized nation name.
 
-current_save = Save()
+save_directory, save_name = select_save()   
 
-save_directory, save_name = current_save.select_save()
+current_save = Save(save_name, save_directory)
 
 # nation, nation_tag, nation_found = find_nation()
 
