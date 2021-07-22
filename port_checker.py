@@ -1,6 +1,7 @@
 # game/setup/provinces
 
 from select_save import select_save
+from select_nation import select_nation
 from find_nation import find_nation
 from return_ports import return_ports
 
@@ -12,6 +13,8 @@ from classes.save import Save
 save_directory, save_name = select_save()   
 
 current_save = Save(save_name, save_directory)
+
+select_nation()
 
 # nation, nation_tag, nation_found = find_nation()
 

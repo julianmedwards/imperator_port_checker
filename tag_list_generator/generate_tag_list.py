@@ -1,22 +1,40 @@
-"""Opens the game's countries file and turns it into an easily usable
-list of all tags and their clean nation names."""
+"""Opens the game's English localized country names file and returns a clean 
+dictionary of tags and names saved in a .json file."""
+# Note - Could potentially be automated in main program by checking game ver.
 
-countries = open("game_files/countries.txt", "r", encoding='utf-8-sig')
+import yaml
+import json
 
-tags_and_names = open("indices/tags_and_names.txt", "w")
+countries = open("game_files/countries_I_english.yml", "r")
+export_file = open("indices/names_and_tags.json", "w")
 
-test_line = ""
+# YAML file iteration procedure:
+# Go through each line. Only skip over any line that doesn't start with
+# 3 letters and a colon or 3 letters, underscore, ADJ.
 
-for line in countries:
-    if line.startswith("#") and line.endswith('.txt"\n'):
-        line = line[1:4]
-    elif line.endswith('.txt"\n'):
-        line = line[:3]
-    else:
-        continue
-    
-    test_line = line
-    tags_and_names.write(f"{line}\n")
 
-countries.close()
-tags_and_names.close()
+def generate_tag_name_file():
+    names_and_tags = {}
+
+    for line in countries:
+        if line.startswith("#") and line.endswith('.txt"\n'):
+            tag = line.lower()[1:4]
+            name = line.rsplit(".", 1)
+            name = name[0].rsplit("/")[-1].replace("_", " " )
+            names_and_tags[name] = tag
+
+        elif line.endswith('.txt"\n'):
+            tag = line.lower()[:3]
+            name = line.rsplit(".", 1)
+            name = name[0].rsplit("/")[-1].replace("_", " " )
+            names_and_tags[name] = tag
+
+        else:
+            continue
+
+    json.dump(names_and_tags, export_file)
+
+    countries.close()
+    export_file.close()
+
+generate_tag_name_file()

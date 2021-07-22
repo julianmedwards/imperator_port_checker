@@ -1,0 +1,5 @@
+Localization YAML File:
+	Random barbarians do have some use.
+	However, their unique generated tag (ex: Bastarnia save's AUIONES, tag A58) also has their full name and the tag
+	itself inside save files.
+	Publish as "known issue," and ignore?
