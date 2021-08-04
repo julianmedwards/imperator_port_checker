@@ -20,6 +20,8 @@ dictionary of tags and names saved in a .json file."""
 # Only issue is pairing names and ADJs in the dictionary.
 # Next question: Does every name have an adjective? Answer: No. Blank.
 
+# $THESSALY_NAME$
+
 import json
 import re
 
@@ -33,26 +35,54 @@ def generate_tag_name_file():
     names_and_tags = {}
 
     for line in names_file:
-        # if (line.startswith(' #') == False and
-        # line.startswith('#') == False and
-        # line.startswith(' \n') == False and
-        # line.startswith('\n') == False and
-        # line.startswith('\ufeffl_english') == False):
-
         if (line.startswith('#') == False and
             line.startswith('\n') == False and
             line[1].isalpha()):
-            tag_or_adj = re.split('\s|:', line)[1]
-            name = line.rsplit('"')[-2]
-            if tag_or_adj.endswith("ADJ") or tag_or_adj.endswith("ADJECTIVE"):
+
+            tag_or_adj = re.split('\s|:', line)[1].lower()
+            name = line.rsplit('"')[-2].lower()
+
+            if  (re.search('adjective', tag_or_adj) or
+                re.search('adj', tag_or_adj)):
                 unpaired_adjectives.append(tag_or_adj)
+                
             else:
-                unpaired_names.update({name: tag_or_adj})
+                unpaired_names.update({
+                    f'{tag_or_adj}': {'name': name, 'tag': tag_or_adj}
+                    })
 
     for adjective in unpaired_adjectives:
-        adjective = adjective.rsplit('_', 1)[0]
-        if adjective in unpaired_names:
-            print("we got one boss")
+        if re.search('magna_graecia_feudatory', adjective):
+            tag = str(adjective).replace('_adjective', "_name")
+            
+            if tag in unpaired_names:
+                name = unpaired_names[tag].get('name')
+                tag = unpaired_names[tag].get('tag')
+                names_and_tags.update({
+                    f'{tag}': {'name': name, 'tag': tag, 'adjective': adjective}
+                    })
+            
+            else:
+                Exception("Unexpected Magna Graecia Feudatory.")
+
+        # elif re.search('_adjective', adjective):
+        #     str(adjective).replace('_adjective', "")
+
+        # elif re.search('_adj', adjective):
+        #     str(adjective).replace('_adj', "")
+
+
+
+
+        # if re.search('empire', adjective):
+        #     print(str(adjective).rsplit('_', 1)[0])
+        # elif re.search('nova', adjective):
+        #     print(str(adjective).rsplit('_', 1)[0])
+        # elif re.search('feudatory', adjective):
+        #     print(str(adjective).rsplit('_', 1)[0])
+
+        # elif str(adjective).split('_', 1)[0] in unpaired_names.values():
+        #     print('Reggy boi')
 
 
     json.dump(names_and_tags, export_file)
