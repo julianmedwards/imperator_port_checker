@@ -7,6 +7,9 @@ from return_ports import return_ports
 
 from classes.save import Save
 
+# Look into re library. Regular Expressions, re.compile for checking for stuff?
+# Increased save search efficiency?
+
 # New way of calling functions and passing along has broken program
 # response to entering an unrecognized nation name.
 
