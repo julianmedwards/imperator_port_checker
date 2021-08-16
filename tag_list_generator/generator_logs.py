@@ -11,11 +11,21 @@ from itertools import zip_longest
 def create_logs():
     locale.setlocale(locale.LC_ALL, "")
     timestamp = time.strftime("%x").replace("/", "-")
+
+
+    def sort_logs(log: str):
+        date = log.split()[0].replace("-", "/")
+        date = time.strptime(date, "%x")
+
+        sequence = re.split("\s|\.", log)[-2]
+        log = (date, sequence)
+        return log
     
+
     directory = "tag_list_generator/logs"
-    daily_logs = []
-    count = 0
+    today_logs = []
     previous_log_exists = False
+    count = 0
 
     if not os.path.exists(directory):
         os.mkdir(directory)
@@ -23,17 +33,25 @@ def create_logs():
         
     elif os.path.exists(directory) and not os.path.isfile(directory):
         if os.listdir(directory):
-            for filename in os.listdir(directory):
-                if re.search(timestamp, filename):
-                    daily_logs.append(filename)
-
-            daily_logs.sort()
             previous_log_exists = True
-            previous_log = daily_logs[-1]
-            previous_log_count = re.split("\s|\.", str(daily_logs))[-2]
-            count = int(previous_log_count) + 1
-        
+            existing_logs = os.listdir(directory)
+            existing_logs.sort(key=sort_logs)
+
+            for filename in existing_logs:
+                if re.search(timestamp, filename):
+                    today_logs.append(filename)
+
+            if today_logs:
+                today_logs.sort(key=sort_logs)
+                previous_log = today_logs[-1]
+                previous_log_count = re.split("\s|\.", str(previous_log))[-2]
+                count = int(previous_log_count) + 1
+
+            else:
+                previous_log = existing_logs[-1]
+                count += 1
         else:
+            previous_log = ""
             count += 1
     else:
         print("Path is a file.")
@@ -45,10 +63,10 @@ def create_logs():
 
     if previous_log_exists:
         previous_log = f"tag_list_generator/logs/{previous_log}"
-    else: previous_log = ""
     new_log = f"tag_list_generator/logs/{timestamp} {count}.log"
     
     return new_log, previous_log
+
 
 def cross_reference_logs(new_log, previous_log=""):
 
@@ -56,12 +74,14 @@ def cross_reference_logs(new_log, previous_log=""):
     l2 = "localization file may contain unhandled formatting."
     warning_message = (l1 + l2)
 
+
     def log_lines(log):
         with open(log) as infile:
             for line in infile:
                 if line == f"WARNING:root:{warning_message}\n":
                     break
                 else: yield line
+
 
     if previous_log == "":
         pass
