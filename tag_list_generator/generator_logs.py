@@ -93,7 +93,7 @@ def cross_reference_logs(new_log, previous_log=""):
         mismatch = False
         for i, (line0, line1) in enumerate(paired_lines):
             if line0 != line1:
-                print("Log mismatch at line", i)
+                print("Log mismatch at line", (i + 1))
                 mismatch = True
         
         if mismatch:
