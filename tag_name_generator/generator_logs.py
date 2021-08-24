@@ -22,7 +22,7 @@ def create_logs():
         return log
     
 
-    directory = "tag_list_generator/logs"
+    directory = "tag_name_generator/logs"
     today_logs = []
     previous_log_exists = False
     count = 0
@@ -57,13 +57,13 @@ def create_logs():
         print("Path is a file.")
 
     logging.basicConfig(
-        filename=f"tag_list_generator/logs/{timestamp} {count}.log",
+        filename=f"tag_name_generator/logs/{timestamp} {count}.log",
         filemode="w+", level=logging.INFO
         )
 
     if previous_log_exists:
-        previous_log = f"tag_list_generator/logs/{previous_log}"
-    new_log = f"tag_list_generator/logs/{timestamp} {count}.log"
+        previous_log = f"tag_name_generator/logs/{previous_log}"
+    new_log = f"tag_name_generator/logs/{timestamp} {count}.log"
     
     return new_log, previous_log
 

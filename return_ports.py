@@ -1,4 +1,4 @@
-save_file = open("example_saves/451.2.2_bosporan_kingdom.rome", 'r')
+
 
 def clean_port_ids(port_list):
         if port_list.isnumeric(): return True

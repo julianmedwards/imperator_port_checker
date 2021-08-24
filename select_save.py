@@ -3,7 +3,11 @@ def select_save():
 
     select_prompt = "Please enter the path to your save file: "
     save_directory = input(select_prompt)
+    # For testing only
+    if save_directory == "Test":
+        save_directory = "C:\\Users\\Julia\\Documents\\Programming\\Repositories\\imperator_port_checker\\example_saves\\450.10.1_bosporan_kingdom.rome"
     save_name = save_directory
     save_name = save_name.rsplit("\\")
     save_name = save_name[-1]
+
     return save_directory, save_name

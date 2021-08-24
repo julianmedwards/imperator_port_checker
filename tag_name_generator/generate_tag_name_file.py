@@ -7,11 +7,11 @@ nested dictionary of matched names, tags and adjectives to .json."""
 # 1. Proper comments.
 # 2. Testing?
 
-
 import json
-from extract_localized_names import extract_localized_names
-from match_tags_and_adjectives import match_tags_and_adjectives
-from generator_logs import create_logs, cross_reference_logs
+
+from tag_name_generator.extract_localized_names import extract_localized_names
+from tag_name_generator.match_tags_and_adjectives import match_tags_and_adjectives
+from tag_name_generator.generator_logs import create_logs, cross_reference_logs
 
 
 def main():
