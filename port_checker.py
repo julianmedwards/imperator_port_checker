@@ -2,6 +2,7 @@
 
 # game/setup/provinces
 
+from itertools import filterfalse
 import os
 
 from tag_name_generator.generate_tag_name_file import main as generate_file
@@ -37,7 +38,14 @@ def main():
         save_directory, save_name = select_save()
         current_save = Save(save_name, save_directory)
 
-        nation_name, nation_tag, nation_adjective = select_nation()
+        selecting = True
+        while selecting == True:
+            selecting, nation_name, nation_tag, nation_adjective = (
+                select_nation(selecting))
+            if selecting:
+                print("Nation not found, please try again.")
+                continue
+
         current_nation = Nation(current_save.save_directory, nation_name,
                                 nation_tag, nation_adjective)
         
