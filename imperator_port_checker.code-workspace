@@ -1,7 +1,8 @@
 {
 	"folders": [
 		{
-			"path": "Repositories\\imperator_port_checker"
+			"name": "imperator_port_checker",
+			"path": "."
 		}
 	],
 	"settings": {}
