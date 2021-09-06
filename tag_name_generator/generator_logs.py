@@ -68,7 +68,7 @@ def create_logs():
     return new_log, previous_log
 
 
-def cross_reference_logs(new_log, previous_log=""):
+def compare_logs(new_log, previous_log=""):
 
     l1 = "Last two log files contain different results. Selected "
     l2 = "localization file may contain unhandled formatting."

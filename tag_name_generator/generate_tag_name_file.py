@@ -9,9 +9,9 @@ nested dictionary of matched names, tags and adjectives to .json."""
 
 import json
 
-from tag_name_generator.extract_localized_names import extract_localized_names
-from tag_name_generator.match_tags_and_adjectives import match_tags_and_adjectives
-from tag_name_generator.generator_logs import create_logs, cross_reference_logs
+from extract_localizations import extract_localizations
+from match_localizations import match_localizations
+from generator_logs import create_logs, compare_logs
 
 
 def main():
@@ -19,17 +19,17 @@ def main():
 
 
     unpaired_adjectives, unpaired_names = (
-        extract_localized_names()
+        extract_localizations()
     )
     matched_names = (
-        match_tags_and_adjectives(unpaired_adjectives, unpaired_names)
+        match_localizations(unpaired_adjectives, unpaired_names)
         )
 
     export_file = open("indices/names_and_tags.json", "w")
     json.dump(matched_names, export_file, indent=4)
     export_file.close()
 
-    cross_reference_logs(new_log, previous_log)
+    compare_logs(new_log, previous_log)
 
 if __name__ == '__main__':
     main()

@@ -3,7 +3,7 @@
 import re
 import logging
 
-def match_tags_and_adjectives(unpaired_adjectives: dict, unpaired_names: dict):
+def match_localizations(unpaired_adjectives: dict, unpaired_names: dict):
     matched_names = {}
 
     for adjective in unpaired_adjectives.copy():
